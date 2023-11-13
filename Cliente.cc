@@ -14,7 +14,8 @@
 #include "Estado.h"
 
 int main() {
-  MaquinaDeTuring maquina{"input.tm"};
-  std::cout << maquina << std::endl;
-  return 0;
+  // ***-> HACER QUE DESPUÉS DE CONSTRUIR LA MT, SE PREGUNTE AL USUARIO SI SE QUIERE MOSTRAR LA MT
+  MaquinaDeTuring maquina{"input.tm", "input.tape"};
+  maquina.EsAceptada();
+  return 0; 
 }

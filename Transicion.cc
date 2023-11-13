@@ -2,7 +2,7 @@
 
 /**
  * @brief Constructor por defecto
- * 
+ *
  */
 Transicion::Transicion() {}
 
@@ -15,11 +15,11 @@ Transicion::Transicion() {}
  * @return false
  */
 bool Transicion::EsMovimientoCorrecto(const char& movimiento_cabeza) const {
-  if (movimiento_cabeza != 'L' || movimiento_cabeza != 'R' ||
-      movimiento_cabeza != 'S') {
-    return false;
+  if (movimiento_cabeza == 'L' || movimiento_cabeza == 'R' ||
+      movimiento_cabeza == 'S') {
+    return true;
   }
-  return true;
+  return false;
 }
 
 /**
@@ -57,6 +57,23 @@ Transicion::AgregarTransicion(std::pair<Estado, Simbolo> pareja,
 }
 
 /**
+ * @brief Método que dado el estado y un símbolo dice si hay transición para ese
+ * par
+ *
+ * @param celda_actual estado y símbolo que lee la cabeza de la cinta
+ * @return true
+ * @return false
+ */
+bool Transicion::ExisteTrancision(
+    std::pair<Estado, Simbolo> celda_actual) const {
+  if (transiciones_.find(celda_actual) != transiciones_.end()) {
+    // hemos encontrado la transición
+    return true;
+  }
+  return false;
+}
+
+/**
  * @brief Sobrecarga operador << para mostrar las transiciones
  *
  * @param os
@@ -65,8 +82,9 @@ Transicion::AgregarTransicion(std::pair<Estado, Simbolo> pareja,
  */
 std::ostream& operator<<(std::ostream& os, const Transicion& transiciones) {
   for (const auto& transicion : transiciones.GetTransiciones()) {
-    os << '(' << transicion.first.first << ", " << transicion.first.second
-       << ") -> " << '(' << transicion.second.estado_siguiente_ << ", "
+    os << '(' << transicion.first.first.GetIdentificador() << ", "
+       << transicion.first.second << ") -> " << '('
+       << transicion.second.estado_siguiente_.GetIdentificador() << ", "
        << transicion.second.simbolo_escritura_ << ", "
        << transicion.second.movimiento_cabeza_ << ')' << std::endl;
   }
@@ -82,4 +100,15 @@ std::ostream& operator<<(std::ostream& os, const Transicion& transiciones) {
 Transicion Transicion::operator=(const Transicion& transicion2) {
   transiciones_ = transicion2.GetTransiciones();
   return *this;
+}
+
+/**
+ * @brief Sobrecarga operador [] para poder acceder cómodamente a la terna
+ *
+ * @param celda_actual par de la celda en la que estamos
+ * @return TernaTransicion
+ */
+TernaTransicion Transicion::operator[](
+    const std::pair<Estado, Simbolo>& celda_actual) {
+  return transiciones_[celda_actual];
 }

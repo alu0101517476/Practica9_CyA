@@ -77,7 +77,7 @@ Alfabeto::Alfabeto(const Cadena& cadena) {
  * @return true
  * @return false
  */
-bool Alfabeto::ContieneElSimbolo(const Simbolo& simbolo) {
+bool Alfabeto::ContieneElSimbolo(const Simbolo& simbolo) const {
   auto iterador{alfabeto_.find(simbolo)};
   if (iterador != alfabeto_.end()) {
     return true;

@@ -7,11 +7,6 @@
 #include "Simbolo.h"
 
 struct TernaTransicion {
-  TernaTransicion(Estado estado_siguiente, Simbolo simbolo_escritura,
-                  char movimiento_cabeza)
-      : estado_siguiente_{estado_siguiente},
-        simbolo_escritura_{simbolo_escritura},
-        movimiento_cabeza_{movimiento_cabeza} {}
   Estado estado_siguiente_;
   Simbolo simbolo_escritura_;
   char movimiento_cabeza_;
@@ -42,12 +37,17 @@ class Transicion {
       const {
     return transiciones_;
   }
+  // Método que devuelve el número de transiciones que hay
+  size_t Size() const { return transiciones_.size(); }
+  // Método que dado el estado y un símbolo dice si hay transición para ese par
+  bool ExisteTrancision(std::pair<Estado, Simbolo> celda_actual) const;
   // Sobrecarga de operador << para mostrar las transiciones por pantalla
   friend std::ostream& operator<<(std::ostream& os,
                                   const Transicion& transicion);
   // Sobrecarga operador = para igualar 2 transiciones
   Transicion operator=(const Transicion& transicion2);
-
+  // Sobrecarga operador [] para poder acceder cómodamente a la terna
+  TernaTransicion operator[](const std::pair<Estado, Simbolo>& celda_actual);
  private:
   std::map<std::pair<Estado, Simbolo>, TernaTransicion> transiciones_;
 };

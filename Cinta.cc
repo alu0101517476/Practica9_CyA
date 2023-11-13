@@ -71,16 +71,32 @@ Cinta::Cinta(const Cinta& cinta) {
  * @brief Método que permite mover hacia la izquierda la cabeza
  * 
  */
-void Cinta::MoverALaIzquierda() {
-  --cabeza_;
+void Cinta::MoverCabezaALaIzquierda() {
+  if (cabeza_ == &cinta_.front()) {
+    cinta_.emplace_front(Simbolo("$"));
+    cinta_.emplace_front(Simbolo("$"));
+    --cabeza_;
+    --cabeza_;
+  } else {
+    --cabeza_;
+    --cabeza_;
+  }
 }
 
 /**
  * @brief Método que permite mover a la derecha la cabeza
  * 
  */
-void Cinta::MoverALaDerecha() {
-  ++cabeza_;
+void Cinta::MoverCabezaALaDerecha() {
+  if (cabeza_ == &cinta_.back()) {
+    cinta_.emplace_back(Simbolo("$"));
+    cinta_.emplace_back(Simbolo("$"));
+    ++cabeza_;
+    ++cabeza_;
+  } else {
+    ++cabeza_;
+    ++cabeza_;
+  }
 }
 
 /**
@@ -89,8 +105,42 @@ void Cinta::MoverALaDerecha() {
  * @param simbolo símbolo que queremos agregar
  * @return Cinta 
  */
-Cinta Cinta::AgregarSimbolo(const Simbolo& simbolo) {
-  cinta_.emplace_back(simbolo);
+void Cinta::AgregarSimbolo(const Simbolo& simbolo) {
+  auto ultima_posicion{std::prev(std::prev(cinta_.end()))};
+  cinta_.emplace(ultima_posicion, simbolo);
+  alfabeto_cinta_.InsertarSimbolo(simbolo); 
+}
+
+/**
+ * @brief Método que permite agregar un símbolo al alfabeto de cinta
+ * 
+ * @param simbolo símbolo que se quiere agregar
+ * @return Alfabeto 
+ */
+Alfabeto Cinta::AgregarSimboloAlfabeto(const Simbolo& simbolo) {
+  alfabeto_cinta_.InsertarSimbolo(simbolo);
+  return alfabeto_cinta_;
+}
+
+/**
+ * @brief Método que dice si un símbolo está en el alfabeto de cinta
+ * 
+ * @param simbolo_alfabeto 
+ * @return true 
+ * @return false 
+ */
+bool Cinta::EstaEnAlfabeto(const Simbolo& simbolo_alfabeto) const {
+  return alfabeto_cinta_.ContieneElSimbolo(simbolo_alfabeto);
+}
+
+/**
+ * @brief Método que permite reemplazar el símbolo que apunta la cabeza por otro
+ * 
+ * @param simbolo símbolo que vamos a escribir por otro
+ * @return Cinta& 
+ */
+Cinta& Cinta::EscribirSimbolo(const Simbolo& simbolo) {
+  *cabeza_ = simbolo;
   return *this;
 }
 
@@ -130,7 +180,10 @@ std::ostream& operator<<(std::ostream& os, const Cinta& cinta) {
  * @param cinta2 cinta que queremos igualar
  * @return Cinta 
  */
-Cinta Cinta::operator=(const Cinta& cinta2) {
+Cinta& Cinta::operator=(const Cinta& cinta2) {
   cinta_ = cinta2.GetCinta();
+  alfabeto_cinta_ = cinta2.GetAlfabetoCinta();
+  auto aux{std::next(cinta_.begin(), 2)};
+  cabeza_ = &(*aux);
   return *this;
 }

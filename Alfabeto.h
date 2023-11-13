@@ -39,7 +39,7 @@ class Alfabeto {
   // Constructor de copia
   Alfabeto(const Alfabeto& alfabeto2);
   // Método que confirma si un símbolo pertenece a un alfabeto
-  bool ContieneElSimbolo(const Simbolo& simbolo);
+  bool ContieneElSimbolo(const Simbolo& simbolo) const;
   // Getter
   std::set<Simbolo> GetAlfabeto() const { return alfabeto_; }
   // Setter
