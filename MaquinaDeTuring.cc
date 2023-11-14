@@ -150,7 +150,7 @@ bool MaquinaDeTuring::SimulacionMT() {
   std::pair<Estado, Simbolo> par{estado_inicial_, cinta_.SimboloActual()};
   while (funcion_transicion_.ExisteTrancision(par)) {
     // Mostramos la traza
-    TrazaSimulacion(par.first, GetCinta());
+    cinta_.ImprimirCintaTraza(par.first);
     // Reemplazamos el símbolo por el que nos piden
     cinta_.EscribirSimbolo(funcion_transicion_[par].simbolo_escritura_);
     // Movemos la cabeza de sitio
@@ -163,7 +163,7 @@ bool MaquinaDeTuring::SimulacionMT() {
     std::pair<Estado, Simbolo> par_aux{funcion_transicion_[par].estado_siguiente_, cinta_.SimboloActual()};
     par = par_aux;
   } 
-  TrazaSimulacion(par.first, GetCinta());
+  cinta_.ImprimirCintaTraza(par.first);
   return (par.first.GetAceptado()) ? true : false;
 }
 
@@ -174,26 +174,6 @@ bool MaquinaDeTuring::SimulacionMT() {
  */
 void MaquinaDeTuring::EsAceptada() {
   (SimulacionMT()) ? std::cout << "Cadena ACEPTADA" << std::endl : std::cout << "Cadena RECHAZADA" << std::endl; 
-}
-  
-/**
- * @brief Método que muestra la traza de la simulación
- * 
- * @param estado_actual Estado en el que estamos en la simulación
- * @param cinta cinta en el estado en el que se encuentra
- */
-void MaquinaDeTuring::TrazaSimulacion(const Estado& estado_actual, const Cinta& cinta) {
-  Cinta cinta_aux{cinta};
-  Simbolo* iterador{&cinta.GetCinta().front()};
-  for (size_t i{0}; i < cinta.GetCinta().size(); ++i) {
-    if (iterador == cinta.GetCabeza()) {
-      std::cout << ' ' << estado_actual << ' ';
-    }
-    std::cout << *iterador;
-    ++iterador;
-    ++iterador;
-  }
-  std::cout << std::endl;
 }
 
 /**

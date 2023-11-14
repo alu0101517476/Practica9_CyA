@@ -6,6 +6,7 @@
 
 #include "Cinta.h"
 #include "Transicion.h"
+#include "Simbolo.h"
 
 class MaquinaDeTuring {
  public:
@@ -19,10 +20,8 @@ class MaquinaDeTuring {
   bool SimulacionMT();
   // Método que dice si la cadena es aceptada o no
   void EsAceptada();
-  // Método que muestra la traza de la simulación
-  void TrazaSimulacion(const Estado& estado_actual, const Cinta& cinta);
   // Getters
-  Cinta GetCinta() const { return cinta_; }
+  Cinta GetCinta() { return cinta_; }
   Transicion& GetFuncionTransicion() { return funcion_transicion_; }
   // Sobrecarga operador = para igualar 2 máquinas de turing
   MaquinaDeTuring& operator=(const MaquinaDeTuring& maquina2);

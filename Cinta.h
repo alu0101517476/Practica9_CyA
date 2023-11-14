@@ -7,6 +7,7 @@
 #include "Alfabeto.h"
 #include "Simbolo.h"
 #include "Cadena.h"
+#include "Estado.h"
 
 // Definimos una variable 'universal' para hacer más fácil el uso de el símbolo blanco
 const Simbolo blanco{"$"};
@@ -20,7 +21,7 @@ class Cinta {
   // Constructor que contruye la cinta a partir de una cadena
   Cinta(const Cadena& cadena);
   // Constructor de copia
-  Cinta(const Cinta& cinta);
+  Cinta(Cinta& cinta);
   // Método que permite mover hacia la izquierda la cabeza
   void MoverCabezaALaIzquierda();
   // Método que permite mover a la derecha la cabeza
@@ -34,11 +35,13 @@ class Cinta {
   // Método que permite reemplazar el símbolo que apunta la cabeza por otro
   Cinta& EscribirSimbolo(const Simbolo& simbolo);
   // Getters
-  std::list<Simbolo> GetCinta() const { return cinta_; }
-  Simbolo* GetCabeza() const { return cabeza_; }
+  std::list<Simbolo> GetCinta() { return cinta_; }
+  std::list<Simbolo>::iterator GetCabeza() { return cabeza_; }
   Alfabeto GetAlfabetoCinta() const { return alfabeto_cinta_; }
   // Método que dice si un símbolo está en el alfabeto de cinta
   bool EstaEnAlfabeto(const Simbolo& simbolo_alfabeto) const;
+  // Método que imprime la cinta mientras se hace la simulación
+  void ImprimirCintaTraza(const Estado& estado);
   // sobrecarga de operador >> que permite leer una cinta 
   std::istream& operator>>(std::istream& is);
   // Método que permite mostrar una cinta
@@ -47,7 +50,7 @@ class Cinta {
   Cinta& operator=(const Cinta& cinta);
  private:
   Alfabeto alfabeto_cinta_;
-  Simbolo* cabeza_;
+  std::list<Simbolo>::iterator cabeza_;
   std::list<Simbolo> cinta_;
 };
 

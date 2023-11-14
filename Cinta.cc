@@ -8,7 +8,7 @@ Cinta::Cinta() {
   for (int i{0}; i < 2; ++i) {
     cinta_.emplace_back(blanco);
   }
-  cabeza_ = &cinta_.front();
+  cabeza_ = cinta_.begin();
   alfabeto_cinta_.InsertarSimbolo(blanco);
 }
 
@@ -21,7 +21,8 @@ Cinta::Cinta(const std::string& nombre_fichero) {
   std::ifstream fichero_entrada{nombre_fichero, std::ios::in};
   std::string cadena;
   fichero_entrada >> cadena;
-  // Leemos los símbolos de la cadena y los introducimos en la cinta y establecemos los símbolos del alfabeto de cinta
+  // Leemos los símbolos de la cadena y los introducimos en la cinta y
+  // establecemos los símbolos del alfabeto de cinta
   for (size_t i{0}; i < cadena.size(); ++i) {
     alfabeto_cinta_.InsertarSimbolo(Simbolo(cadena[i]));
     cinta_.emplace_back(Simbolo(cadena[i]));
@@ -29,21 +30,21 @@ Cinta::Cinta(const std::string& nombre_fichero) {
   // Añadimos al alfabeto de cinta el símbolo blanco
   alfabeto_cinta_.InsertarSimbolo(blanco);
   // decimos que la cabeza apunta al primer símbolo de la izquierda actual
-  cabeza_ = &cinta_.front();
+  cabeza_ = cinta_.begin();
   // Introducimos dos símbolos blancos al principio y al final de la cinta
-  for (int j{0}; j < 4; ++j) {
-    (j < 2) ? cinta_.emplace_front(blanco) : cinta_.emplace_back(blanco);
-  }
+  cinta_.emplace_front(blanco);
+  cinta_.emplace_back(blanco);
   fichero_entrada.close();
 }
 
 /**
  * @brief Constructor que contruye la cinta a partir de una cadena
- * 
+ *
  * @param cadena cadena que forma la cinta
  */
 Cinta::Cinta(const Cadena& cadena) {
-  // Leemos los símbolos de la cadena y los introducimos en la cinta y establecemos los símbolos del alfabeto de cinta
+  // Leemos los símbolos de la cadena y los introducimos en la cinta y
+  // establecemos los símbolos del alfabeto de cinta
   for (const auto& simbolo : cadena.GetCadena()) {
     alfabeto_cinta_.InsertarSimbolo(Simbolo(simbolo));
     cinta_.emplace_back(simbolo);
@@ -51,71 +52,64 @@ Cinta::Cinta(const Cadena& cadena) {
   // Añadimos al alfabeto de cinta el símbolo blanco
   alfabeto_cinta_.InsertarSimbolo(blanco);
   // decimos que la cabeza apunta al primer símbolo de la izquierda actual
-  cabeza_ = &cinta_.front();
+  cabeza_ = cinta_.begin();
   // Introducimos dos símbolos blancos al principio y al final de la cinta
-  for (int j{0}; j < 4; ++j) {
-    (j < 2) ? cinta_.emplace_front(blanco) : cinta_.emplace_back(blanco);
-  }
+  cinta_.emplace_front(blanco);
+  cinta_.emplace_back(blanco);
 }
 
 /**
  * @brief Constructor de copia
- * 
+ *
  * @param cinta cinta de la que queremos construir la cinta actual
  */
-Cinta::Cinta(const Cinta& cinta) {
-  *this = cinta;
-}
+Cinta::Cinta(Cinta& cinta) { *this = cinta; }
 
 /**
  * @brief Método que permite mover hacia la izquierda la cabeza
- * 
+ *
  */
 void Cinta::MoverCabezaALaIzquierda() {
-  if (cabeza_ == &cinta_.front()) {
-    cinta_.emplace_front(Simbolo("$"));
-    cinta_.emplace_front(Simbolo("$"));
-    --cabeza_;
+  if (cabeza_ == cinta_.begin()) {
+    cinta_.emplace_front(blanco);
+    cinta_.emplace_front(blanco);
     --cabeza_;
   } else {
-    --cabeza_;
     --cabeza_;
   }
 }
 
 /**
  * @brief Método que permite mover a la derecha la cabeza
- * 
+ *
  */
 void Cinta::MoverCabezaALaDerecha() {
-  if (cabeza_ == &cinta_.back()) {
-    cinta_.emplace_back(Simbolo("$"));
-    cinta_.emplace_back(Simbolo("$"));
-    ++cabeza_;
+  if (cabeza_ == cinta_.end()) {
+    cinta_.emplace_back(blanco);
+    cinta_.emplace_back(blanco);
     ++cabeza_;
   } else {
-    ++cabeza_;
     ++cabeza_;
   }
 }
 
 /**
  * @brief Método que permite agregar un símbolo
- * 
+ *
  * @param simbolo símbolo que queremos agregar
- * @return Cinta 
+ * @return Cinta
  */
 void Cinta::AgregarSimbolo(const Simbolo& simbolo) {
   auto ultima_posicion{std::prev(std::prev(cinta_.end()))};
   cinta_.emplace(ultima_posicion, simbolo);
-  alfabeto_cinta_.InsertarSimbolo(simbolo); 
+  alfabeto_cinta_.InsertarSimbolo(simbolo);
 }
 
 /**
  * @brief Método que permite agregar un símbolo al alfabeto de cinta
- * 
+ *
  * @param simbolo símbolo que se quiere agregar
- * @return Alfabeto 
+ * @return Alfabeto
  */
 Alfabeto Cinta::AgregarSimboloAlfabeto(const Simbolo& simbolo) {
   alfabeto_cinta_.InsertarSimbolo(simbolo);
@@ -124,10 +118,10 @@ Alfabeto Cinta::AgregarSimboloAlfabeto(const Simbolo& simbolo) {
 
 /**
  * @brief Método que dice si un símbolo está en el alfabeto de cinta
- * 
- * @param simbolo_alfabeto 
- * @return true 
- * @return false 
+ *
+ * @param simbolo_alfabeto
+ * @return true
+ * @return false
  */
 bool Cinta::EstaEnAlfabeto(const Simbolo& simbolo_alfabeto) const {
   return alfabeto_cinta_.ContieneElSimbolo(simbolo_alfabeto);
@@ -135,9 +129,9 @@ bool Cinta::EstaEnAlfabeto(const Simbolo& simbolo_alfabeto) const {
 
 /**
  * @brief Método que permite reemplazar el símbolo que apunta la cabeza por otro
- * 
+ *
  * @param simbolo símbolo que vamos a escribir por otro
- * @return Cinta& 
+ * @return Cinta&
  */
 Cinta& Cinta::EscribirSimbolo(const Simbolo& simbolo) {
   *cabeza_ = simbolo;
@@ -145,10 +139,26 @@ Cinta& Cinta::EscribirSimbolo(const Simbolo& simbolo) {
 }
 
 /**
- * @brief sobrecarga de operador >> que permite leer una cinta 
- * 
- * @param is 
- * @return * std::istream& 
+ * @brief Método que imprime la cinta mientras se hace la simulación
+ *
+ * @param estado Estado que vamos a imprimir
+ */
+void Cinta::ImprimirCintaTraza(const Estado& estado) {
+  for (auto it{cinta_.begin()}; it != cinta_.end(); ++it) {
+    if (it == cabeza_) {
+      std::cout << ' ' << estado.GetIdentificador() << ' ';
+    }
+    std::cout << *it;
+  }
+  std::cout << std::endl;
+}
+
+
+/**
+ * @brief sobrecarga de operador >> que permite leer una cinta
+ *
+ * @param is
+ * @return * std::istream&
  */
 std::istream& Cinta::operator>>(std::istream& is) {
   Cadena cadena_aux;
@@ -157,13 +167,13 @@ std::istream& Cinta::operator>>(std::istream& is) {
   *this = cinta_aux;
   return is;
 }
-  // Método que permite mostrar una cinta
+// Método que permite mostrar una cinta
 /**
- * @brief 
- * 
- * @param os 
- * @param cinta 
- * @return * std::ostream& 
+ * @brief
+ *
+ * @param os
+ * @param cinta
+ * @return * std::ostream&
  */
 std::ostream& operator<<(std::ostream& os, const Cinta& cinta) {
   os << "...|";
@@ -176,14 +186,13 @@ std::ostream& operator<<(std::ostream& os, const Cinta& cinta) {
 
 /**
  * @brief Sobrecarga operador = para igualar 2 cintas
- * 
+ *
  * @param cinta2 cinta que queremos igualar
- * @return Cinta 
+ * @return Cinta
  */
 Cinta& Cinta::operator=(const Cinta& cinta2) {
-  cinta_ = cinta2.GetCinta();
+  cinta_ = cinta2.cinta_;
   alfabeto_cinta_ = cinta2.GetAlfabetoCinta();
-  auto aux{std::next(cinta_.begin(), 2)};
-  cabeza_ = &(*aux);
+  cabeza_ = std::next(cinta_.begin(), 1);
   return *this;
 }

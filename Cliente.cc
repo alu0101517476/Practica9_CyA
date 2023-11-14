@@ -16,6 +16,13 @@
 int main() {
   // ***-> HACER QUE DESPUÉS DE CONSTRUIR LA MT, SE PREGUNTE AL USUARIO SI SE QUIERE MOSTRAR LA MT
   MaquinaDeTuring maquina{"input.tm", "input.tape"};
+  std::list<Simbolo>::iterator prueba;
   maquina.EsAceptada();
+  /*
+  while (prueba != maquina.GetCinta().GetCinta().end()) {
+    std::cout << prueba->GetSimbolo() << " ";
+    ++prueba;
+  }
+  */
   return 0; 
 }
