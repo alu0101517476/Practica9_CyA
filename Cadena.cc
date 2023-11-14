@@ -3,13 +3,13 @@
 // Grado en Ingeniería Informática
 // Asignatura: Computabilidad y Algoritmia
 // Curso: 2º
-// Práctica 6: Convertir un NFA en un DFA: Algoritmo de construcción de subconjuntos
+// Práctica 9: Implementación de un simulador de Máquinas de Turing
 // Autor: Eric y Bermúdez Hernández
 // Correo: alu0101517476@ull.edu.es
-// Fecha: 24/10/2023
+// Fecha: 14/11/2023
 // Archivo Cadena.cc: Implementación de la clase 'Cadena'.
 // Contiene todas las implementaciones de la clase 'Cadena'
-// 24/10/2023 - Creación (primera versión) del código
+// 12/11/2023 - Creación (primera versión) del código
 
 #include "Cadena.h"
 

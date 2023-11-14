@@ -1,3 +1,16 @@
+// Universidad de La Laguna
+// Escuela Superior de Ingeniería y Tecnología
+// Grado en Ingeniería Informática
+// Asignatura: Computabilidad y Algoritmia
+// Curso: 2º
+// Práctica 9: Implementación de un simulador de Máquinas de Turing
+// Autor: Eric y Bermúdez Hernández
+// Correo: alu0101517476@ull.edu.es
+// Fecha: 14/11/2023
+// Archivo Transicion.cc: Implementación de la clase 'Transicion'.
+// Contiene todas las implementaciones de la clase 'Transicion'
+// 12/11/2023 - Creación (primera versión) del código
+
 #include "Transicion.h"
 
 /**

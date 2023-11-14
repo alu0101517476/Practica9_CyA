@@ -1,3 +1,16 @@
+// Universidad de La Laguna
+// Escuela Superior de Ingeniería y Tecnología
+// Grado en Ingeniería Informática
+// Asignatura: Computabilidad y Algoritmia
+// Curso: 2º
+// Práctica 9: Implementación de un simulador de Máquinas de Turing
+// Autor: Eric y Bermúdez Hernández
+// Correo: alu0101517476@ull.edu.es
+// Fecha: 14/11/2023
+// Archivo MaquinaDeTuring.cc: Implementación de la clase 'MaquinaDeTuring'.
+// Contiene todas las implementaciones de la clase 'MaquinaDeTuring'
+// 12/11/2023 - Creación (primera versión) del código
+
 #include "MaquinaDeTuring.h"
 
 /**
@@ -5,8 +18,14 @@
  *
  * @param nombre_fichero
  */
-MaquinaDeTuring::MaquinaDeTuring(const std::string& nombre_fichero_mt, const std::string& nombre_fichero_cinta) {
+MaquinaDeTuring::MaquinaDeTuring(const std::string& nombre_fichero_mt,
+                                 const std::string& nombre_fichero_cinta) {
   std::ifstream fichero_entrada{nombre_fichero_mt, std::ios::in};
+  if (fichero_entrada.fail()) {
+    std::cout << "Error, el fichero '" << nombre_fichero_mt
+              << "' no se pudo abrir correctamente" << std::endl;
+    exit(1);
+  }
   // Iniciamos la cinta de la máquina
   Cinta cinta_aux{nombre_fichero_cinta};
   cinta_ = cinta_aux;
@@ -23,7 +42,8 @@ MaquinaDeTuring::MaquinaDeTuring(const std::string& nombre_fichero_mt, const std
   std::getline(fichero_entrada, estado_inicial);
   // COMPROBACIÓN ESTADO INCIAL CORRECTO
   if (estado_inicial > numero_estados) {
-    std::cout << "Error, el estado " << estado_inicial << " no existe en la MT" << std::endl;
+    std::cout << "Error, el estado " << estado_inicial << " no existe en la MT"
+              << std::endl;
     exit(1);
   }
   // Leemos los estados de aceptación y los metemos tanto en el conjunto de
@@ -33,7 +53,8 @@ MaquinaDeTuring::MaquinaDeTuring(const std::string& nombre_fichero_mt, const std
   while (linea >> estado_aceptacion) {
     // COMPROBACIÓN ESTADO DE ACEPTACIÓN CORRECTO
     if (estado_aceptacion > numero_estados) {
-      std::cout << "Error, el estado " << estado_aceptacion << " no existe en la MT" << std::endl;
+      std::cout << "Error, el estado " << estado_aceptacion
+                << " no existe en la MT" << std::endl;
       exit(1);
     }
     if (estado_aceptacion == estado_inicial) {
@@ -69,7 +90,8 @@ MaquinaDeTuring::MaquinaDeTuring(const std::string& nombre_fichero_mt, const std
     Estado estado_actual{BuscarEstado(aux)};
     // COMPROBACIÓN EL ESTADO ACTUAL EXISTE EN LA MT
     if (aux > numero_estados) {
-      std::cout << "Error, el estado " << estado_actual << " no existe en la MT" << std::endl;
+      std::cout << "Error, el estado " << estado_actual << " no existe en la MT"
+                << std::endl;
       exit(1);
     }
     linea >> aux;
@@ -88,15 +110,16 @@ MaquinaDeTuring::MaquinaDeTuring(const std::string& nombre_fichero_mt, const std
     char movimiento_cabeza{aux[0]};
     // COMPROBACIÓN MOVIMIENTO CABEZA CORRECTO
     if (!funcion_transicion_.EsMovimientoCorrecto(movimiento_cabeza)) {
-      std::cout << "Error, el movimiento " << movimiento_cabeza << " no es correcto"
-                << std::endl;
+      std::cout << "Error, el movimiento " << movimiento_cabeza
+                << " no es correcto" << std::endl;
       exit(1);
     }
     linea >> aux;
     Estado estado_siguiente{BuscarEstado(aux)};
     // COMPROBACIÓN EL ESTADO SIGUIENTE EXISTE EN LA MT
     if (aux > numero_estados) {
-      std::cout << "Error, el estado " << estado_siguiente << " no existe en la MT" << std::endl;
+      std::cout << "Error, el estado " << estado_siguiente
+                << " no existe en la MT" << std::endl;
       exit(1);
     }
     funcion_transicion_.AgregarTransicion(
@@ -115,8 +138,8 @@ MaquinaDeTuring::MaquinaDeTuring(const std::string& nombre_fichero_mt, const std
 
 /**
  * @brief Constructor de copia
- * 
- * @param maquina2 
+ *
+ * @param maquina2
  */
 MaquinaDeTuring::MaquinaDeTuring(const MaquinaDeTuring& maquina2) {
   *this = maquina2;
@@ -145,8 +168,9 @@ Estado MaquinaDeTuring::BuscarEstado(const std::string& identificador_estado) {
  * @return true
  * @return false
  */
-bool MaquinaDeTuring::SimulacionMT() { 
-  // Inicializamos el par con el estado inicial y el símbolo en el que está la cabeza
+bool MaquinaDeTuring::SimulacionMT() {
+  // Inicializamos el par con el estado inicial y el símbolo en el que está la
+  // cabeza
   std::pair<Estado, Simbolo> par{estado_inicial_, cinta_.SimboloActual()};
   while (funcion_transicion_.ExisteTrancision(par)) {
     // Mostramos la traza
@@ -160,27 +184,29 @@ bool MaquinaDeTuring::SimulacionMT() {
       cinta_.MoverCabezaALaDerecha();
     }
     // Actualizamos el par que estamos inspeccionando
-    std::pair<Estado, Simbolo> par_aux{funcion_transicion_[par].estado_siguiente_, cinta_.SimboloActual()};
+    std::pair<Estado, Simbolo> par_aux{
+        funcion_transicion_[par].estado_siguiente_, cinta_.SimboloActual()};
     par = par_aux;
-  } 
+  }
   cinta_.ImprimirCintaTraza(par.first);
   return (par.first.GetAceptado()) ? true : false;
 }
 
 // Método que dice si la cadena es aceptada o no
 /**
- * @brief 
- * 
+ * @brief
+ *
  */
 void MaquinaDeTuring::EsAceptada() {
-  (SimulacionMT()) ? std::cout << "Cadena ACEPTADA" << std::endl : std::cout << "Cadena RECHAZADA" << std::endl; 
+  (SimulacionMT()) ? std::cout << "Cadena ACEPTADA" << std::endl
+                   : std::cout << "Cadena RECHAZADA" << std::endl;
 }
 
 /**
  * @brief Sobrecarga operador = para igualar 2 máquinas de turing
- * 
+ *
  * @param maquina2 segunda máquina
- * @return MaquinaDeTuring& 
+ * @return MaquinaDeTuring&
  */
 MaquinaDeTuring& MaquinaDeTuring::operator=(const MaquinaDeTuring& maquina2) {
   numero_estados_ = maquina2.numero_estados_;

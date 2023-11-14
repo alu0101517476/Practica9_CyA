@@ -3,13 +3,13 @@
 // Grado en Ingeniería Informática
 // Asignatura: Computabilidad y Algoritmia
 // Curso: 2º
-// Práctica 7: Gramáticas en Forma Normal de Chomsky
+// Práctica 9: Implementación de un simulador de Máquinas de Turing
 // Autor: Eric y Bermúdez Hernández
 // Correo: alu0101517476@ull.edu.es
-// Fecha: 24/10/2023
+// Fecha: 14/11/2023
 // Archivo Simbolo.h: Definición de la clase 'Simbolo'.
 // Contiene todas las definiciones de la clase 'Simbolo'
-// 24/10/2023 - Creación (primera versión) del código
+// 12/11/2023 - Creación (primera versión) del código
 
 #pragma once
 

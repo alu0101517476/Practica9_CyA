@@ -1,15 +1,29 @@
+// Universidad de La Laguna
+// Escuela Superior de Ingeniería y Tecnología
+// Grado en Ingeniería Informática
+// Asignatura: Computabilidad y Algoritmia
+// Curso: 2º
+// Práctica 9: Implementación de un simulador de Máquinas de Turing
+// Autor: Eric y Bermúdez Hernández
+// Correo: alu0101517476@ull.edu.es
+// Fecha: 14/11/2023
+// Archivo Cinta.h: Definición de la clase 'Cinta'.
+// Contiene todas las definiciones de la clase 'Cinta'
+// 12/11/2023 - Creación (primera versión) del código
+
 #pragma once
 
+#include <fstream>
 #include <iostream>
 #include <list>
-#include <fstream>
 
 #include "Alfabeto.h"
-#include "Simbolo.h"
 #include "Cadena.h"
 #include "Estado.h"
+#include "Simbolo.h"
 
-// Definimos una variable 'universal' para hacer más fácil el uso de el símbolo blanco
+// Definimos una variable 'universal' para hacer más fácil el uso de el símbolo
+// blanco
 const Simbolo blanco{"$"};
 
 class Cinta {
@@ -42,12 +56,13 @@ class Cinta {
   bool EstaEnAlfabeto(const Simbolo& simbolo_alfabeto) const;
   // Método que imprime la cinta mientras se hace la simulación
   void ImprimirCintaTraza(const Estado& estado);
-  // sobrecarga de operador >> que permite leer una cinta 
+  // sobrecarga de operador >> que permite leer una cinta
   std::istream& operator>>(std::istream& is);
   // Método que permite mostrar una cinta
   friend std::ostream& operator<<(std::ostream& os, const Cinta& cinta);
   // Sobrecarga operador = para igualar 2 cintas
   Cinta& operator=(const Cinta& cinta);
+
  private:
   Alfabeto alfabeto_cinta_;
   std::list<Simbolo>::iterator cabeza_;

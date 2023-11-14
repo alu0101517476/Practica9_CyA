@@ -3,13 +3,13 @@
 // Grado en Ingeniería Informática
 // Asignatura: Computabilidad y Algoritmia
 // Curso: 2º
-// Práctica 6: Convertir un NFA en un DFA: Algoritmo de construcción de subconjuntos
+// Práctica 9: Implementación de un simulador de Máquinas de Turing
 // Autor: Eric y Bermúdez Hernández
 // Correo: alu0101517476@ull.edu.es
-// Fecha: 24/10/2023
+// Fecha: 14/11/2023
 // Archivo Estado.h: Definición de la clase 'Estado'.
 // Contiene todas las definiciones de la clase 'Estado'
-// 24/10/2023 - Creación (primera versión) del código
+// 12/11/2023 - Creación (primera versión) del código
 
 #pragma once
 

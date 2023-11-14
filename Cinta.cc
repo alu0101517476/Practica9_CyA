@@ -1,3 +1,16 @@
+// Universidad de La Laguna
+// Escuela Superior de Ingeniería y Tecnología
+// Grado en Ingeniería Informática
+// Asignatura: Computabilidad y Algoritmia
+// Curso: 2º
+// Práctica 9: Implementación de un simulador de Máquinas de Turing
+// Autor: Eric y Bermúdez Hernández
+// Correo: alu0101517476@ull.edu.es
+// Fecha: 14/11/2023
+// Archivo Cinta.cc: Implementación de la clase 'Cinta'.
+// Contiene todas las implementaciones de la clase 'Cinta'
+// 12/11/2023 - Creación (primera versión) del código
+
 #include "Cinta.h"
 
 /**
@@ -19,6 +32,11 @@ Cinta::Cinta() {
  */
 Cinta::Cinta(const std::string& nombre_fichero) {
   std::ifstream fichero_entrada{nombre_fichero, std::ios::in};
+  if (fichero_entrada.fail()) {
+    std::cout << "Error, el fichero '" << nombre_fichero
+              << "' no se pudo abrir correctamente" << std::endl;
+    exit(1);
+  }
   std::string cadena;
   fichero_entrada >> cadena;
   // Leemos los símbolos de la cadena y los introducimos en la cinta y
@@ -152,7 +170,6 @@ void Cinta::ImprimirCintaTraza(const Estado& estado) {
   }
   std::cout << std::endl;
 }
-
 
 /**
  * @brief sobrecarga de operador >> que permite leer una cinta

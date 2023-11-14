@@ -3,13 +3,13 @@
 // Grado en Ingeniería Informática
 // Asignatura: Computabilidad y Algoritmia
 // Curso: 2º
-// Práctica 7: Gramáticas en Forma Normal de Chomsky
+// Práctica 9: Implementación de un simulador de Máquinas de Turing
 // Autor: Eric y Bermúdez Hernández
 // Correo: alu0101517476@ull.edu.es
-// Fecha: 24/10/2023
-// Archivo Alfabeto.cc: Implementación de la clase 'Alfabeto'.
-// Contiene todas las implementaciones de la clase 'Alfabeto'
-// 24/10/2023 - Creación (primera versión) del código
+// Fecha: 14/11/2023
+// Archivo Alfabeto.cc: Implementaciones de la clase 'Cadena'.
+// Contiene todas las implementaciones de la clase 'Cadena'
+// 12/11/2023 - Creación (primera versión) del código
 
 #include "Alfabeto.h"
 
